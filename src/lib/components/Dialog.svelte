@@ -41,7 +41,7 @@
         permaStyle = styling;
     }
 
-    function handleHover(e: MouseEvent) {
+    function handleHover() {
         if (props.hover) {
             hoverStyle = hoverStylor.selectStyle(width);
             assignStyle();
@@ -56,15 +56,19 @@
     }
 
     export let sx: Record<string, unknown> = {};
-    export let src, alt;
+    export let open
+    let value;
+    $:if (value !== undefined) open ? value.showModal() : value.close()
 </script>
 
 
 {#await stylor.createStyle(sx,props.sxClass)}
     <Skeleton/>
 {:then _}
-        <img src={src} alt={alt} style={styling} on:click={props.click} class={props.class} id={props.id} use:hover
-             on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}/>
+    <dialog style={styling} on:click={props.click} bind:this={value} class={props.class} id={props.id} use:hover
+            on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}>
+        <slot/>
+    </dialog>
 {/await}
 
 

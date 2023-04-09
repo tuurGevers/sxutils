@@ -30,10 +30,6 @@
     function assignStyle() {
         styling = stylor.selectStyle(width);
 
-        if (props.align) {
-            styling += " text-align:" + props.align + ";"
-        }
-
         if (props.extra) {
             styling += " " + props.extra;
         }
@@ -45,7 +41,7 @@
         permaStyle = styling;
     }
 
-    function handleHover(e: MouseEvent) {
+    function handleHover() {
         if (props.hover) {
             hoverStyle = hoverStylor.selectStyle(width);
             assignStyle();
@@ -60,36 +56,20 @@
     }
 
     export let sx: Record<string, unknown> = {};
-    export let variant: number = 1;
 </script>
 
-
-{#await stylor.createStyle(sx,props.sxClass)}
-    <Skeleton/>
+{#await stylor.createStyle(sx, props.sxClass)}
+    <Skeleton rows={5}/>
 {:then _}
-    {#if variant === 1}
-        <h1 style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </h1>
-    {:else if variant === 2}
-        <h2 style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </h2>
-    {:else if variant === 3}
-        <h3 style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </h3>
-    {:else if variant === 4}
-        <h4 style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </h4>
-    {:else if variant === 5}
-        <h5 style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </h5>
-    {:else if variant === 6}
-        <h6 style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </h6>
-    {/if}
+    <p style={styling} on:click={props.click} class={props.class} id={props.id} use:hover on:hover={(e)=>handleHover(e)}
+       on:leave={()=>handleLeave()}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna
+        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea<br/> commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
 {/await}
+
+<svelte:window bind:innerWidth={width}/>

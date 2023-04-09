@@ -30,6 +30,10 @@
     function assignStyle() {
         styling = stylor.selectStyle(width);
 
+        if (props.align) {
+            styling += " text-align:" + props.align + ";"
+        }
+
         if (props.extra) {
             styling += " " + props.extra;
         }
@@ -41,7 +45,7 @@
         permaStyle = styling;
     }
 
-    function handleHover(e: MouseEvent) {
+    function handleHover() {
         if (props.hover) {
             hoverStyle = hoverStylor.selectStyle(width);
             assignStyle();
@@ -56,23 +60,36 @@
     }
 
     export let sx: Record<string, unknown> = {};
+    export let variant: number = 1;
 </script>
 
-<style>
-    button {
-        margin: 16px;
-    }
-
-</style>
 
 {#await stylor.createStyle(sx,props.sxClass)}
     <Skeleton/>
 {:then _}
-        <button style={styling} on:click={props.click} class={props.class} id={props.id} use:hover
-                on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}>
+    {#if variant === 1}
+        <h1 style={styling} class={props.class} id={props.id}>
             <slot/>
-        </button>
+        </h1>
+    {:else if variant === 2}
+        <h2 style={styling} class={props.class} id={props.id}>
+            <slot/>
+        </h2>
+    {:else if variant === 3}
+        <h3 style={styling} class={props.class} id={props.id}>
+            <slot/>
+        </h3>
+    {:else if variant === 4}
+        <h4 style={styling} class={props.class} id={props.id}>
+            <slot/>
+        </h4>
+    {:else if variant === 5}
+        <h5 style={styling} class={props.class} id={props.id}>
+            <slot/>
+        </h5>
+    {:else if variant === 6}
+        <h6 style={styling} class={props.class} id={props.id}>
+            <slot/>
+        </h6>
+    {/if}
 {/await}
-
-
-<svelte:window bind:innerWidth={width}/>

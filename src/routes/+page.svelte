@@ -1,32 +1,43 @@
 <script>
-    import Box from "../components/Box.svelte";
-    import {helloStyling} from "../testcss/home";
-    import Navbar from "../components/Navbar.svelte";
-    import Button from "../components/Button.svelte";
+    import Box from "../lib/components/Box.svelte";
+    import Navbar from "../lib/components/Navbar.svelte";
+    import Button from "../lib/components/Button.svelte";
     import {fade, fly} from 'svelte/transition';
-    import LorumIpsum from "../components/LorumIpsum.svelte";
-    import Typography from "../components/Typography.svelte";
-    import P from "../components/P.svelte";
-    import Link from "../components/Link.svelte";
-    import Fade from "../components/Fade.svelte";
-    import Card from "../components/card/Card.svelte";
-    import CardTitle from "../components/card/CardTitle.svelte";
-    import CardContent from "../components/card/CardContent.svelte";
-    import CardActions from "../components/card/CardActions.svelte";
-    import Fly from "../components/Fly.svelte";
-    import Image from "../components/Image.svelte";
-    import TextField from "../components/TextField.svelte";
+    import LorumIpsum from "../lib/components/LorumIpsum.svelte";
+    import Typography from "../lib/components/Typography.svelte";
+    import P from "../lib/components/P.svelte";
+    import Link from "../lib/components/Link.svelte";
+    import Fade from "../lib/components/Fade.svelte";
+    import Card from "../lib/components/card/Card.svelte";
+    import CardTitle from "../lib/components/card/CardTitle.svelte";
+    import CardContent from "../lib/components/card/CardContent.svelte";
+    import CardActions from "../lib/components/card/CardActions.svelte";
+    import Fly from "../lib/components/Fly.svelte";
+    import Image from "../lib/components/Image.svelte";
+    import TextField from "../lib/components/TextField.svelte";
+    import Select from "../lib/components/Select.svelte";
 
     let red = "500px"
     let value = "";
 </script>
 
 <Navbar links={["home", "contact", "FAQ"]} color="orange" hover={{backgroundColor:"blue"}} sx={{height:"15vh"}}/>
-<Button sx={{width:{sm:"90%", lg:80}, height:{sm:"80vh", md:"40vh", lg:"20vh"}, "background-color":"red", rounding:{sm:1, lg:2}, float:2}}
-        hover={{backgroundColor:{sm:"green", lg:"red"}}} sxClass={helloStyling} transition click={()=>alert("test")}>
-    test
-</Button>
+<Box sx={{flex:"row"}}>
 
+    <Box sx={{width:"20%"}}>s</Box>
+    <Box sx={{width:"50%"}}>s</Box>
+</Box>
+<Box sx={{flex:"row"}}>
+
+    <Button sx={{width:{sm:"90%", lg:80}, height:{sm:"80vh", md:"40vh", lg:"20vh"}, "background-color":"red", rounding:{sm:1, lg:2}, float:2}}
+            hover={{backgroundColor:{sm:"green", lg:"red"}}} transition click={()=>alert("test")}>
+        test
+    </Button>
+    <Button sx={{width:{sm:"90%", lg:80}, height:{sm:"80vh", md:"40vh", lg:"20vh"}, "background-color":"red", rounding:{sm:1, lg:2}, float:2}}
+            hover={{backgroundColor:{sm:"green", lg:"red"}}} transition click={()=>alert("test")}>
+        test
+    </Button>
+</Box>
 <Box sx={{p:"8 12"}} animate={{mode:fly, props:{x:200, duration:2000, delay:3000}}}
      hover={{backgroundColor:{sm:"green", lg:"red"}}}>
     <LorumIpsum/>
@@ -66,9 +77,16 @@
 
 <TextField on:change={(e)=>value = e.detail.value} sx={{rounding: 4, float:2}} value="placeholder"/>
 {value}
-<Box sx={{m:"64px"}}>
-    <LorumIpsum/>
+<Box sx={{flex:"row"}}>
+    <Box sx={{m:"64px"}}>
+        <LorumIpsum/>
+    </Box>
+
+    <label>
+        <Select items={["nl", "es", "en"]} selected="es" on:change={(e)=>alert(e.detail.value)}/>
+    </label>
 </Box>
+
 <LorumIpsum/>
 <LorumIpsum/>
 <LorumIpsum/>

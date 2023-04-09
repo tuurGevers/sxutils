@@ -1,6 +1,6 @@
 <script>
     import Button from "./Button.svelte";
-    import {FormUtil} from "./FormUtil";
+    import {FormUtil} from "./formUtil";
     import TextArea from "./TextArea.svelte";
     import Box from "./Box.svelte";
     import {afterUpdate, createEventDispatcher} from "svelte";

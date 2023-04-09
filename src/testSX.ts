@@ -1,5 +1,5 @@
-import type {cssClass} from "./script/classing/types";
-import {size} from "./script/classing/types";
+import type {cssClass} from "./lib/script/classing/types";
+import {size} from "./lib/script/classing/types";
 
 export default [
     {

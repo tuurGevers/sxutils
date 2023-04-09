@@ -3,15 +3,13 @@
     import {Styler} from "../script/utils";
     import {hover} from "../script/hover";
     import Skeleton from "./Skeleton.svelte";
-    import {selection} from "./selection";
 
-    let width = 0
-    let styling = ""
+    let width = 0;
+    let styling = "";
     let permaStyle = "";
     let hoverStyle = "";
     let props = {...$$restProps};
-
-    $: width && assignStyle()
+    let value;
 
     const stylor = new Styler();
     const hoverStylor = new Styler();
@@ -44,7 +42,7 @@
         permaStyle = styling;
     }
 
-    function handleHover(e: MouseEvent) {
+    function handleHover() {
         if (props.hover) {
             hoverStyle = hoverStylor.selectStyle(width);
             assignStyle();
@@ -58,46 +56,29 @@
         }
     }
 
-
-    export let value
-
-    let change
-    if (props.util) {
-        props.util.change.subscribe((value) => change = value)
-    }
-    $:if (props.util && props.util.tekst.length > 1 && change) {
-        value = props.util.tekst
-        props.util.change.set(false)
-    }
-
-
+    export let sx: Record<string, unknown> = {};
+    export let items: string[];
     const dispatch = createEventDispatcher();
 
-    function handleChange() {
+    function sendChange() {
         dispatch("change", {
             value,
         })
     }
 
-    function handleSelect(e) {
-        dispatch("selection", {
-            area: e.target
-        })
-    }
-
-    export let type = ""
-    export let sx: Record<string, unknown> = {};
-
+    export let selected;
 </script>
 
-{#await stylor.createStyle(sx,props.sxClass)}
-    <Skeleton/>
-{:then _}
-    <label for={props.id}></label>
-    <textarea style={styling} bind:value={value} class={props.class} id={props.id} use:hover use:selection
-              on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:input={()=>handleChange()}
-              on:selection={(e)=>handleSelect(e) }></textarea>
 
+{#await stylor.createStyle(sx, props.sxClass)}
+    <Skeleton rows={5}/>
+{:then _}
+    <label for={props.id}></label><select bind:value={value} style={styling} class={props.class} id={props.id} use:hover
+                                          on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:change={()=>sendChange()}>
+        {#each items as item}
+            <option value={item} selected={item === selected}>{item}</option>
+        {/each}
+    </select>
 {/await}
 
 

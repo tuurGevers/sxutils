@@ -38,14 +38,10 @@
             styling += " " + hoverStyle;
         }
 
-        if(props.align){
-            styling += " text-align:" + props.align + ";"
-        }
-
         permaStyle = styling;
     }
 
-    function handleHover(e: MouseEvent) {
+    function handleHover() {
         if (props.hover) {
             hoverStyle = hoverStylor.selectStyle(width);
             assignStyle();
@@ -59,16 +55,24 @@
         }
     }
 
+    let divWidth = 0;
+
+    function getDivWidth() {
+        divWidth = document.getElementById(id).offsetWidth;
+    }
+
     export let sx: Record<string, unknown> = {};
+    export let id:string = "div"
 </script>
 
 
-{#await stylor.createStyle(sx,props.sxClass)}
-    <Skeleton/>
+{#await stylor.createStyle(sx, props.sxClass)}
+    <Skeleton rows={5}}/>
 {:then _}
-        <p style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </p>
+    <div style={styling} on:click={props.click} class={props.class} id={id} use:hover
+         on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}>
+        <slot/>
+    </div>
 {/await}
 
 
