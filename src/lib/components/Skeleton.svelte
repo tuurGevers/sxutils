@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let rows
+    export let rows = 5
     export let width:string ="40%";
 </script>
 

@@ -1,17 +1,20 @@
 <script lang="ts">
-    import {afterUpdate, onMount} from "svelte";
+    import {afterUpdate, createEventDispatcher, onMount} from "svelte";
     import {Styler} from "../script/utils";
     import {hover} from "../script/hover";
     import Skeleton from "./Skeleton.svelte";
+    import {Box} from "./index";
 
     let width = 0;
     let styling = "";
     let permaStyle = "";
     let hoverStyle = "";
     let props = {...$$restProps};
+    let checked = [];
 
     const stylor = new Styler();
     const hoverStylor = new Styler();
+    const dispatch = createEventDispatcher();
 
     $: if (width) {
         assignStyle();
@@ -55,14 +58,37 @@
         }
     }
 
+    $: if (checked.length > 0) {
+        const combinedArray = checked.map((bool, index) => {
+            if (bool) {
+                return boxes[index];
+            }
+        })
+        dispatch("checked", {
+            value: combinedArray,
+        });
+    }
+
     export let sx: Record<string, unknown> = {};
+    export let boxes: string[];
+    export let id: string = "checkbox";
 </script>
 
-{#await stylor.createStyle(sx,props.sxClass)}
-    <Skeleton/>
+
+{#await stylor.createStyle(sx, props.sxClass)}
+    <Skeleton rows={5}/>
 {:then _}
-    <input type="submit" style={styling} on:click={props.click} class={props.class} id={props.id} use:hover
-            on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}/>
+    {#each boxes as box,i}
+        <Box sx={{userSelect:"none"}} click={()=>checked[i] = !checked[i]}>
+            {box}
+            <input type=checkbox style={styling} bind:checked={checked[i]} id={id+i} class={props.class}
+                   use:hover
+                   on:hover={(e)=>handleHover(e)}
+                   on:leave={()=>handleLeave()}
+            />
+        </Box>
+
+    {/each}
 {/await}
 
 

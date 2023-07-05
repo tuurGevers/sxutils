@@ -21,14 +21,16 @@ export class Styler {
         this.global = " ";
     }
 
-    async createStyle(sx: object, sxClass?: object) {
+    async createStyle(sx: object, sxClass?: object[]) {
         this.sm = "";
         this.md = "";
         this.lg = "";
         this.global = " ";
         let joined = sx;
         if (sxClass) {
-            joined = joinSx(sx, sxClass);
+            for (let i = 0; i < sxClass.length; i++) {
+                joined = joinSx(joined, sxClass[i]);
+            }
         }
         for (const [key, value] of Object.entries(joined)) {
             let special: [string, boolean] | undefined;
@@ -87,7 +89,21 @@ export class Styler {
                 translate = "border-radius:" + value * 8 + "px;"
                 break;
             }
-
+            case "backgroundRepeat": {
+                valid = true
+                translate  = "background-repeat: " + value + ";"
+                break;
+            }
+            case "backgroundSize": {
+                valid = true
+                translate  = "background-size: " + value + ";"
+                break;
+            }
+            case "backgroundPosition": {
+                valid = true
+                translate  = "background-position: " + value + ";"
+                break;
+            }
             case "float": {
                 valid = true
                 translate = "box-shadow: 0 5px " + value * 8 + "px 0;"
@@ -195,6 +211,13 @@ export class Styler {
             case"paddingLeft": {
                 valid = true
                 translate = "padding-left: " + convertNumbers(value) + ";";
+                break;
+            }
+
+            case "bgc":
+            case"bgColor": {
+                valid = true
+                translate = "background-color: " + convertNumbers(value) + ";";
                 break;
             }
 

@@ -6,6 +6,7 @@
     import Link from "./Link.svelte";
     import P from "./P.svelte";
     import {fade} from "svelte/transition";
+    import {Variants} from "./Variants";
 
     let width = 0;
     let styling = "";
@@ -62,6 +63,8 @@
 
 
     export let links = []
+    export let to = links;
+
     let display = true;
 
 
@@ -109,10 +112,10 @@
     <Skeleton/>
 {:then _}
         <div rel="{divRef}" transition:fade={{duration:1000}}>
-                <Box sx={{flex:{sm:"col", lg:"row",}, width:"100%", "justify-content":"space-around", "align-items":"center", "background-color":props.color, "padding":"1em",position:"relative", visibility: display?"visible":"hidden", zIndex:display?20:0}}
+                <Box variant={Variants.Header} sx={{flex:{sm:"col", lg:"row",}, width:"100%", "justify-content":"space-around", "align-items":"center", "background-color":props.color, "padding":"1em",position:"relative", visibility: display?"visible":"hidden", zIndex:display?20:0}}
                      hover={props.hover} extra={styling}>
-                    {#each links as link}
-                        <Link sx={{"font-size":"1.5em"}} to={link}>{link}</Link>
+                    {#each links as link,i}
+                        <Link sx={{"font-size":"1.5em"}} to={to[i]}>{link}</Link>
                     {/each}
                 </Box>
         </div>

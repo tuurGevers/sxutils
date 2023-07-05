@@ -85,7 +85,6 @@
         })
     }
 
-    export let type = ""
     export let sx: Record<string, unknown> = {};
 
 </script>

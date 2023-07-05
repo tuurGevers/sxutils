@@ -1,14 +1,14 @@
 <script lang="ts">
-    import {afterUpdate, onMount} from "svelte";
-    import {Styler} from "../script/utils";
-    import {hover} from "../script/hover";
+    import { afterUpdate, onMount } from "svelte";
+    import { Styler } from "../script/utils";
+    import { hover } from "../script/hover";
     import Skeleton from "./Skeleton.svelte";
 
     let width = 0;
     let styling = "";
     let permaStyle = "";
     let hoverStyle = "";
-    let props = {...$$restProps};
+    let props = { ...$$restProps };
 
     const stylor = new Styler();
     const hoverStylor = new Styler();
@@ -38,8 +38,8 @@
             styling += " " + hoverStyle;
         }
 
-        if(props.align){
-            styling += " text-align:" + props.align + ";"
+        if (props.align) {
+            styling += " text-align:" + props.align + ";";
         }
 
         permaStyle = styling;
@@ -62,14 +62,12 @@
     export let sx: Record<string, unknown> = {};
 </script>
 
-
-{#await stylor.createStyle(sx,props.sxClass)}
-    <Skeleton/>
+{#await stylor.createStyle(sx, props.sxClass)}
+    <Skeleton />
 {:then _}
-        <p style={styling} class={props.class} id={props.id}>
-            <slot/>
-        </p>
+    <p style="{styling}" class="{props.class}" id="{props.id}" on:mouseover="{handleHover}" on:mouseleave="{handleLeave}">
+        <slot />
+    </p>
 {/await}
 
-
-<svelte:window bind:innerWidth={width}/>
+<svelte:window bind:innerWidth="{width}" />

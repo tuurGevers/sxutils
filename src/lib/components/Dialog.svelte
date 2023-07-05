@@ -1,8 +1,9 @@
 <script lang="ts">
-    import {afterUpdate, onMount} from "svelte";
+    import {afterUpdate, createEventDispatcher, onMount} from "svelte";
     import {Styler} from "../script/utils";
     import {hover} from "../script/hover";
     import Skeleton from "./Skeleton.svelte";
+    import {clickOutside} from "../script/clickOutside"
 
     let width = 0;
     let styling = "";
@@ -12,7 +13,7 @@
 
     const stylor = new Styler();
     const hoverStylor = new Styler();
-
+    const dispatch = createEventDispatcher()
     $: if (width) {
         assignStyle();
     }
@@ -55,19 +56,29 @@
         }
     }
 
+    function outside() {
+        value.close()
+        dispatch("outside")
+    }
+
     export let sx: Record<string, unknown> = {};
     export let open
     let value;
     $:if (value !== undefined) open ? value.showModal() : value.close()
+
+
 </script>
 
 
-{#await stylor.createStyle(sx,props.sxClass)}
+{#await stylor.createStyle(sx, props.sxClass)}
     <Skeleton/>
 {:then _}
-    <dialog style={styling} on:click={props.click} bind:this={value} class={props.class} id={props.id} use:hover
+    <dialog style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} bind:this={value}
+            class={props.class} id={props.id} use:hover
             on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}>
-        <slot/>
+        <div use:clickOutside on:click_outside={()=>outside()}>
+            <slot/>
+        </div>
     </dialog>
 {/await}
 

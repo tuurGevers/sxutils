@@ -115,9 +115,9 @@
 
     <Dialog open={openLink}>
         <Typography variant={2}>voeg hyperlink toe</Typography>
-        <label>
+        <form>
             <TextField on:change={(e)=>link = e.detail.value} sx={{rounding: 4,height:3}}/>
-        </label>
+        </form>
         <Button sx={buttonSx} hover={{backgroundColor:"#d73030"}} click={()=> updateLink()}>
             <P sx={{color:"white", fontSize: 2, fontWeight: "bold"}}>save</P>
         </Button>

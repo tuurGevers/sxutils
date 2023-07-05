@@ -1,23 +1,34 @@
 <script>
     import {fly} from 'svelte/transition';
     import {inview} from 'svelte-inview';
+    import Box from "$lib/components/Box.svelte";
 
     let isInView;
 
-    export let dir, amount, duration = 1000, delay = 0
 
+    export let dir, amount, duration = 1000, delay = 0, sx={}
+    export let instant = false
 </script>
 
-
-<div use:inview={{ unobserveOnEnter: true, rootMargin: '-8%' }}
-     on:change={({ detail }) => {isInView = detail.inView}}>
-</div>
-{#if isInView}
+<style>
+    div {
+        z-index: 999;
+    }
+</style>
+{#if !instant}
+    <div transition:fly={{x:amount, duration: duration, delay: delay}} use:inview={{ unobserveOnEnter: true, rootMargin: '10px' }}
+         on:inview_change={({ detail }) => {isInView = detail.inView}}>
+        <slot/>
+    </div>
+{/if}
+{#if isInView || instant}
     {#if dir === "x"}
         <div transition:fly={{x:amount, duration: duration, delay: delay}}>
-            <slot/>
+            <Box sx={sx}>
+                <slot/>
+            </Box>
         </div>
-        {:else}
+    {:else}
         <div transition:fly={{y:amount, duration: duration, delay: delay}}>
             <slot/>
         </div>

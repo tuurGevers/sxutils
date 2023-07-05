@@ -3,13 +3,14 @@
     import {Styler} from "../script/utils";
     import {hover} from "../script/hover";
     import Skeleton from "./Skeleton.svelte";
+    import {Variants} from "./Variants";
 
     let width = 0;
     let styling = "";
     let permaStyle = "";
     let hoverStyle = "";
     let props = {...$$restProps};
-
+    let component;
     const stylor = new Styler();
     const hoverStylor = new Styler();
 
@@ -55,14 +56,24 @@
         }
     }
 
+    let divWidth = 0;
+
+
     export let sx: Record<string, unknown> = {};
+    export let id: string = "span";
 </script>
 
-{#await stylor.createStyle(sx,props.sxClass)}
-    <Skeleton/>
+
+{#await stylor.createStyle(sx, props.sxClass)}
+    <Skeleton rows={5}/>
 {:then _}
-    <input type="submit" style={styling} on:click={props.click} class={props.class} id={props.id} use:hover
-            on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}/>
+        <span bind:this={component} style={styling} on:click={props.click}
+              on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+              on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}
+              on:scroll={props.scroll}>
+            <slot/>
+        </span>
+
 {/await}
 
 

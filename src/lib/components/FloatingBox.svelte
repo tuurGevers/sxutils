@@ -63,7 +63,6 @@
     export let sx: Record<string, unknown> = {};
     export let variant: Variants = Variants.DIV
     export let id: string = Variants[variant].toLocaleLowerCase();
-    export let fly=false
 </script>
 
 
@@ -71,49 +70,49 @@
     <Skeleton rows={5}/>
 {:then _}
     {#if variant === Variants.DIV}
-        <div bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <div bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
              on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll} on:scroll={props.scroll}>
             <slot/>
         </div>
     {/if}
     {#if variant === Variants.ARTICLE}
-        <article bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <article bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
                  on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </article>
     {/if}
     {#if variant === Variants.ASIDE}
-        <aside bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <aside bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
                on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </aside>
     {/if}
     {#if variant === Variants.FOOTER}
-        <footer bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <footer bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
                 on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </footer>
     {/if}
     {#if variant === Variants.HEADER}
-        <header bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <header bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
                 on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </header>
     {/if}
     {#if variant === Variants.MAIN}
-        <main bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <main bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
               on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </main>
     {/if}
     {#if variant === Variants.NAV}
-        <nav bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <nav bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
              on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </nav>
     {/if}
     {#if variant === Variants.SECTION}
-        <section bind:this={component} style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={id} use:hover
+        <section bind:this={component} style={styling} on:click={(e)=>e.stopPropagation()} on:keypress={(e)=>e.key==="Enter"?e.stopPropagation():""} class={props.class} id={id} use:hover
                  on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:scroll={props.scroll}>
             <slot/>
         </section>

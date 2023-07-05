@@ -16,21 +16,24 @@
     import Image from "../lib/components/Image.svelte";
     import TextField from "../lib/components/TextField.svelte";
     import Select from "../lib/components/Select.svelte";
+    import FloatingBox from "$lib/components/FloatingBox.svelte";
+    import Popup from "$lib/components/Popup.svelte";
+    import InlineNav from "$lib/components/InlineNav.svelte";
 
     let red = "500px"
     let value = "";
 </script>
 
 <Navbar links={["home", "contact", "FAQ"]} color="orange" hover={{backgroundColor:"blue"}} sx={{height:"15vh"}}/>
-<Box sx={{flex:"row"}}>
-
+<InlineNav logo="favicon.png" links={["home", "contact", "FAQ"]}/>
+<Box sx={{flex:"row",mt:40}}>
     <Box sx={{width:"20%"}}>s</Box>
     <Box sx={{width:"50%"}}>s</Box>
 </Box>
 <Box sx={{flex:"row"}}>
 
     <Button sx={{width:{sm:"90%", lg:80}, height:{sm:"80vh", md:"40vh", lg:"20vh"}, "background-color":"red", rounding:{sm:1, lg:2}, float:2}}
-            hover={{backgroundColor:{sm:"green", lg:"red"}}} transition click={()=>alert("test")}>
+            hover={{backgroundColor:{sm:"green", lg:"red"}}} click={()=>alert("test")}>
         test
     </Button>
     <Button sx={{width:{sm:"90%", lg:80}, height:{sm:"80vh", md:"40vh", lg:"20vh"}, "background-color":"red", rounding:{sm:1, lg:2}, float:2}}
@@ -71,22 +74,35 @@
         </CardActions>
     </Card>
 </Fade>
-<Fly dir="y" amount="3000" duration={2000}>
+
+<Fly dir="y" amount={3000} duration={2000} instant>
     <Image src="favicon.png" alt="foto" sx={{width:{lg:"50%", sm:"100%"}, height:"auto", maxHeight:"400px"}}/>
 </Fly>
 
-<TextField on:change={(e)=>value = e.detail.value} sx={{rounding: 4, float:2}} value="placeholder"/>
-{value}
+<Fly dir="y" amount={3000} duration={2000}>
+    <Image src="favicon.png" alt="foto" sx={{width:{lg:"50%", sm:"100%"}, height:"auto", maxHeight:"400px"}}/>
+</Fly>
+<Box click={()=>alert("click")}>
+    {value}
+    <FloatingBox>
+    <TextField on:change={(e)=>value = e.detail.value} preview={false} on:enter={()=>alert('enter')} sx={{rounding: 4, float:2}}
+               value="placeholder"/>
+        {value}
+
+    </FloatingBox>
+</Box>
 <Box sx={{flex:"row"}}>
     <Box sx={{m:"64px"}}>
         <LorumIpsum/>
     </Box>
 
-    <label>
+    <form>
         <Select items={["nl", "es", "en"]} selected="es" on:change={(e)=>alert(e.detail.value)}/>
-    </label>
+    </form>
 </Box>
 
+<Popup duration={1000} message="testing" click={()=>alert("clicked")}/>
+<LorumIpsum/>
 <LorumIpsum/>
 <LorumIpsum/>
 <LorumIpsum/>

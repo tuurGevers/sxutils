@@ -29,7 +29,7 @@
 {#await stylor.createStyle(sx,props.sxClass)}
     <Skeleton/>
 {:then _}
-        <Box sx={{flex:"col", float:props.float, "rounding":3, "align-items":"center", margin:"1em"}} extra={styling} class={props.class} id={props.id} hover={props.hover}>
+        <Box sx={{flex:"col", float:props.float, "rounding":3, "align-items":"center", margin:"1em"}} extra={styling} class={props.class} click={props.click} id={props.id} hover={props.hover}>
             <slot/>
         </Box>
 {/await}

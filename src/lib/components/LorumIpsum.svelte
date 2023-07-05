@@ -61,7 +61,7 @@
 {#await stylor.createStyle(sx, props.sxClass)}
     <Skeleton rows={5}/>
 {:then _}
-    <p style={styling} on:click={props.click} class={props.class} id={props.id} use:hover on:hover={(e)=>handleHover(e)}
+    <p style={styling} on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={props.id} use:hover on:hover={(e)=>handleHover(e)}
        on:leave={()=>handleLeave()}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
         magna

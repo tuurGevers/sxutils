@@ -20,11 +20,21 @@ export {default as Fade} from "./Fade.svelte"
 export {default as TextField} from "./TextField.svelte"
 export {default as TextArea} from "./TextArea.svelte"
 export {default as FormButton} from "./FormButton.svelte"
+export {default as AutoComplete} from "./AutoComplete.svelte"
 
 
 export {default as TextUtil} from "./TextUtil.svelte"
 export {default as Dialog} from "./Dialog.svelte"
-
-
-
-
+export {Variants as SectionVariants} from "./Variants"
+export {clickOutside} from "../script/clickOutside"
+export {basic,bgImage,paper} from "../styles/BoxStyles"
+export {wrap, row, col, flex, around, between, center} from "../styles/FlexStyles"
+export {default as CheckBox} from "./CheckBox.svelte"
+export {default as Sx} from "./Sx.svelte"
+export {default as SideNav} from "./SideNav.svelte"
+export {default as InlineNav} from "./InlineNav.svelte"
+export {default as MediaQuery} from "./MediaQuery.svelte"
+export {default as CustomSelect} from "./CustomSelect.svelte"
+export {default as Option} from "./Option.svelte"
+export {default as FloatingBox} from "./FloatingBox.svelte"
+export {default as Popup}  from "./Popup.svelte"

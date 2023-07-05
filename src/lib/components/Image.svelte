@@ -63,7 +63,7 @@
 {#await stylor.createStyle(sx,props.sxClass)}
     <Skeleton/>
 {:then _}
-        <img src={src} alt={alt} style={styling} on:click={props.click} class={props.class} id={props.id} use:hover
+        <img src={src} alt={alt} style={styling} loading="lazy" on:click={props.click} on:keypress={(e)=>e.key==="Enter"?props.click:""} class={props.class} id={props.id} use:hover
              on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}/>
 {/await}
 

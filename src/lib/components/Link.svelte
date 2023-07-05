@@ -73,11 +73,11 @@
 {:then _}
     {#if external}
         <a style={styling} on:click={props.click} class={props.class} id={props.id} href={to} use:hover
-           on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}>
+           on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} target="_blank">
             <slot/>
         </a>
     {:else}
-        <a style={styling} on:click={props.click} class={props.class} id={props.id} href={to}
+        <a style={styling} on:click={props.click} class={props.class} id={props.id} href={window.location.origin + "/"+ to}
            use:hover
            on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()}>
             <slot/>

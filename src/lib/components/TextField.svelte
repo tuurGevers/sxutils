@@ -3,13 +3,13 @@
     import {Styler} from "../script/utils";
     import {hover} from "../script/hover";
     import Skeleton from "./Skeleton.svelte";
+    import {P} from "./index";
 
     let width = 0;
     let styling = "";
     let permaStyle = "";
     let hoverStyle = "";
     let props = {...$$restProps};
-    let preview = true;
 
 
     const dispatch = createEventDispatcher();
@@ -61,42 +61,63 @@
     }
 
 
-    function handleChange() {
+    function handleChange(e) {
         dispatch("change", {
-            value
+            value,
+            target: e.target
         })
     }
 
 
-    export let value, type;
+    function handleKeyDown(event) {
+        if (event.key === "Enter") {
+            dispatch("enter", {
+                value,
+            });
+        }
+        if (event.key === "Backspace") {
+            dispatch("backspace")
+        }
+    }
+
+    export let error = false;
+
+    export let value, type = "text";
+    export let preview = true;
     export let sx: Record<string, unknown> = {};
+    export let errorMessage = ""
 </script>
 
-{#await stylor.createStyle(sx,props.sxClass)}
+{#await stylor.createStyle(sx, props.sxClass)}
     <Skeleton/>
 {:then _}
-    <label>
-        {#if type === "password" ||  type === "pass" }
-            <input type="password" style={styling} bind:value={value} class={props.class} id={props.id} use:hover
-                   on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:input={()=>handleChange()} on:click={()=>{
-                   if (preview){value=""; preview=false}
-               }}/>
-        {:else}
-            {#if type === "email"}
-                <input type="email" style={styling} bind:value={value} class={props.class} id={props.id} use:hover
-                       on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:input={()=>handleChange()}
-                       on:click={()=>{
-                   if (preview){value=""; preview=false}
-               }}/>
+    <div style="display:flex;flex-direction:column;align-items: center">
+        <label>
+            {#if type === "password" || type === "pass" }
+                <input type="password" style={styling} bind:value={value} class={props.class} id={props.id} use:hover
+                       on:hover={(e)=>handleHover(e)} on:keydown={(e) => handleKeyDown(e)}
+                       on:leave={()=>handleLeave()} on:click={(e)=>{preview? value="": "";e.stopPropagation()}}
+                       on:input={(e)=>handleChange(e)}/>
+            {:else}
+                {#if type === "email"}
+                    <input type="email" style={styling} bind:value={value} class={props.class} id={props.id} use:hover
+                           on:hover={(e)=>handleHover(e)} on:keydown={(e) => handleKeyDown(e)}
+                           on:leave={()=>handleLeave()} on:click={(e)=>{preview? value="": "";e.stopPropagation()}}
+                           on:input={(e)=>handleChange(e)}
+                    />
                 {:else}
-                <input type="text" style={styling} bind:value={value} class={props.class} id={props.id} use:hover
-                       on:hover={(e)=>handleHover(e)} on:leave={()=>handleLeave()} on:input={()=>handleChange()}
-                       on:click={()=>{
-                   if (preview){value=""; preview=false}
-               }}/>
+                    <input type="text" style={styling} bind:value={value} class={props.class} id={props.id} use:hover
+                           on:hover={(e)=>handleHover(e)} on:keydown={(e) => handleKeyDown(e)}
+                           on:leave={()=>handleLeave()} on:click={(e)=>{preview? value="": "";e.stopPropagation()}}
+                           on:input={(e)=>handleChange(e)}
+                    />
+                {/if}
             {/if}
+        </label>
+        {#if error}
+            <P sx={{fontSize:2, color:"red"}}>{errorMessage}</P>
         {/if}
-    </label>
+    </div>
 {/await}
 
 
